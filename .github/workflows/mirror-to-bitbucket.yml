@@ -28,8 +28,10 @@ jobs:
           fi
           git clone --mirror "https://github.com/${GITHUB_REPOSITORY}.git" mirror.git
           cd mirror.git
-          # Pass credentials via an HTTP Basic auth header rather than embedding
-          # them in the URL — the username here is an email address, and an
-          # unescaped @ in a user:pass@host URL breaks URL parsing.
-          AUTH=$(printf '%s:%s' "$BITBUCKET_USERNAME" "$BITBUCKET_APP_PASSWORD" | base64 -w0)
-          git -c http.extraHeader="Authorization: Basic ${AUTH}" push --mirror "https://bitbucket.org/${BITBUCKET_REPO}.git"
+          # The username is an email address, so it must be percent-encoded
+          # before going into a user:pass@host URL (an unescaped @ breaks URL
+          # parsing, and an http.extraHeader alone doesn't stop git's own
+          # interactive credential prompt).
+          ENC_USER=$(jq -rn --arg v "$BITBUCKET_USERNAME" '$v|@uri')
+          ENC_PASS=$(jq -rn --arg v "$BITBUCKET_APP_PASSWORD" '$v|@uri')
+          git push --mirror "https://${ENC_USER}:${ENC_PASS}@bitbucket.org/${BITBUCKET_REPO}.git"

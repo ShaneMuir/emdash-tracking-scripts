@@ -1,4 +1,4 @@
-# @shennyy/emdash-tracking-scripts
+# @tribusdigital/emdash-tracking-scripts
 
 [![CI](https://github.com/ShaneMuir/emdash-tracking-scripts/actions/workflows/ci.yml/badge.svg)](https://github.com/ShaneMuir/emdash-tracking-scripts/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
@@ -13,12 +13,12 @@ Raw `<script>` injection into `<head>`/`<body>` is only available through EmDash
 ## Install
 
 ```sh
-npm install @shennyy/emdash-tracking-scripts
+npm install @tribusdigital/emdash-tracking-scripts
 ```
 
 ```js
 // astro.config.mjs
-import { trackingScriptsPlugin } from '@shennyy/emdash-tracking-scripts';
+import { trackingScriptsPlugin } from '@tribusdigital/emdash-tracking-scripts';
 import emdash from 'emdash/astro';
 
 export default defineConfig({

@@ -127,12 +127,12 @@ export function buildFragments(resolved) {
 }
 
 /**
- * `@shennyy/emdash-tracking-scripts` — a native EmDash plugin.
+ * `@tribusdigital/emdash-tracking-scripts` — a native EmDash plugin.
  *
  * Wire it into `astro.config.mjs`:
  *
  * ```js
- * import { trackingScriptsPlugin } from '@shennyy/emdash-tracking-scripts';
+ * import { trackingScriptsPlugin } from '@tribusdigital/emdash-tracking-scripts';
  *
  * emdash({ plugins: [trackingScriptsPlugin()] })
  * ```
@@ -146,7 +146,7 @@ export function buildFragments(resolved) {
  * `createPlugin` export below from this package's `entrypoint` at build time.
  */
 export function trackingScriptsPlugin() {
-	return { id, version, format: 'native', entrypoint: '@shennyy/emdash-tracking-scripts' };
+	return { id, version, format: 'native', entrypoint: '@tribusdigital/emdash-tracking-scripts' };
 }
 
 export function createPlugin() {

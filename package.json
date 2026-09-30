@@ -1,5 +1,5 @@
 {
-  "name": "@shennyy/emdash-tracking-scripts",
+  "name": "@tribusdigital/emdash-tracking-scripts",
   "version": "0.1.0",
   "description": "Native EmDash plugin for injecting third-party tracking and analytics scripts (Google Tag Manager, GA4/gtag, Lead Forensics, and custom snippets) site-wide, with an admin-configurable settings screen.",
   "type": "module",

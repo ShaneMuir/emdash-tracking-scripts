@@ -1,4 +1,4 @@
-# @tribusdigital/emdash-tracking-scripts
+# @shennyy/emdash-tracking-scripts
 
 A native [EmDash CMS](https://emdashcms.com) plugin that injects third-party tracking and analytics scripts — Google Tag Manager, GA4/gtag, Lead Forensics, and any other raw snippet — site-wide, with an admin-configurable settings screen so a non-technical SEO user can manage tracking IDs without a developer or a deploy.
 
@@ -9,12 +9,12 @@ Raw `<script>` injection into `<head>`/`<body>` is only available through EmDash
 ## Install
 
 ```sh
-npm install @tribusdigital/emdash-tracking-scripts
+npm install @shennyy/emdash-tracking-scripts
 ```
 
 ```js
 // astro.config.mjs
-import { trackingScriptsPlugin } from '@tribusdigital/emdash-tracking-scripts';
+import { trackingScriptsPlugin } from '@shennyy/emdash-tracking-scripts';
 import emdash from 'emdash/astro';
 
 export default defineConfig({

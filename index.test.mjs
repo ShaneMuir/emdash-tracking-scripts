@@ -147,7 +147,7 @@ describe('plugin wiring', () => {
 			id: 'tracking-scripts',
 			version: expect.any(String),
 			format: 'native',
-			entrypoint: '@tribusdigital/emdash-tracking-scripts',
+			entrypoint: '@shennyy/emdash-tracking-scripts',
 		});
 	});
 

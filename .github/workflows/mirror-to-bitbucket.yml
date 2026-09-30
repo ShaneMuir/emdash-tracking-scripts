@@ -2,36 +2,31 @@ name: Mirror to Bitbucket
 
 # GitHub is the public source of truth for this repo. This mirrors every
 # push (all branches and tags, exactly) to our private Bitbucket org so
-# nobody has to keep two remotes up to date by hand.
+# nobody has to keep two remotes up to date by hand. Same SSH deploy-key
+# pattern as fieldlock-sync-guard-for-acf's mirror workflow.
 on:
   push:
-    branches: ["**"]
-    tags: ["**"]
+    branches:
+      - '**'
+    tags:
+      - '**'
   workflow_dispatch: {}
 
 jobs:
   mirror:
     runs-on: ubuntu-latest
     steps:
-      - name: Mirror full repository to Bitbucket
-        env:
-          # Username and repo path aren't sensitive — they're repository
-          # Variables. Only the app password is a Secret.
-          BITBUCKET_USERNAME: ${{ vars.BITBUCKET_USERNAME }}
-          BITBUCKET_APP_PASSWORD: ${{ secrets.BITBUCKET_APP_PASSWORD }}
-          BITBUCKET_REPO: ${{ vars.BITBUCKET_REPO }}
+      - name: Set up deploy key
         run: |
-          set -euo pipefail
-          if [ -z "${BITBUCKET_USERNAME:-}" ] || [ -z "${BITBUCKET_APP_PASSWORD:-}" ] || [ -z "${BITBUCKET_REPO:-}" ]; then
-            echo "::error::Missing BITBUCKET_USERNAME / BITBUCKET_REPO (repository Variables) or BITBUCKET_APP_PASSWORD (repository Secret)."
-            exit 1
-          fi
-          git clone --mirror "https://github.com/${GITHUB_REPOSITORY}.git" mirror.git
-          cd mirror.git
-          # The username is an email address, so it must be percent-encoded
-          # before going into a user:pass@host URL (an unescaped @ breaks URL
-          # parsing, and an http.extraHeader alone doesn't stop git's own
-          # interactive credential prompt).
-          ENC_USER=$(jq -rn --arg v "$BITBUCKET_USERNAME" '$v|@uri')
-          ENC_PASS=$(jq -rn --arg v "$BITBUCKET_APP_PASSWORD" '$v|@uri')
-          git push --mirror "https://${ENC_USER}:${ENC_PASS}@bitbucket.org/${BITBUCKET_REPO}.git"
+          mkdir -p ~/.ssh
+          echo "${{ secrets.BITBUCKET_SSH_KEY }}" > ~/.ssh/bitbucket_mirror
+          chmod 600 ~/.ssh/bitbucket_mirror
+          ssh-keyscan -t ed25519 bitbucket.org >> ~/.ssh/known_hosts
+
+      - name: Mirror to Bitbucket
+        env:
+          GIT_SSH_COMMAND: ssh -i ~/.ssh/bitbucket_mirror -o IdentitiesOnly=yes
+        run: |
+          git clone --mirror "https://github.com/${{ github.repository }}.git" repo-mirror
+          cd repo-mirror
+          git push --mirror git@bitbucket.org:tribusdigital/emdash-tracking-scripts.git

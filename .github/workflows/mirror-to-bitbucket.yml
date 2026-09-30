@@ -15,13 +15,15 @@ jobs:
     steps:
       - name: Mirror full repository to Bitbucket
         env:
-          BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
+          # Username and repo path aren't sensitive — they're repository
+          # Variables. Only the app password is a Secret.
+          BITBUCKET_USERNAME: ${{ vars.BITBUCKET_USERNAME }}
           BITBUCKET_APP_PASSWORD: ${{ secrets.BITBUCKET_APP_PASSWORD }}
-          BITBUCKET_REPO: ${{ secrets.BITBUCKET_REPO }}
+          BITBUCKET_REPO: ${{ vars.BITBUCKET_REPO }}
         run: |
           set -euo pipefail
           if [ -z "${BITBUCKET_USERNAME:-}" ] || [ -z "${BITBUCKET_APP_PASSWORD:-}" ] || [ -z "${BITBUCKET_REPO:-}" ]; then
-            echo "::error::Missing one of the BITBUCKET_USERNAME / BITBUCKET_APP_PASSWORD / BITBUCKET_REPO repository secrets."
+            echo "::error::Missing BITBUCKET_USERNAME / BITBUCKET_REPO (repository Variables) or BITBUCKET_APP_PASSWORD (repository Secret)."
             exit 1
           fi
           git clone --mirror "https://github.com/${GITHUB_REPOSITORY}.git" mirror.git

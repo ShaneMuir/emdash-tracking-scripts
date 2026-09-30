@@ -4,6 +4,9 @@
   "description": "Native EmDash plugin for injecting third-party tracking and analytics scripts (Google Tag Manager, GA4/gtag, Lead Forensics, and custom snippets) site-wide, with an admin-configurable settings screen.",
   "type": "module",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "Shane Muirhead <shane.muirhead@tribusdigital.com>",
   "contributors": [],
   "repository": {

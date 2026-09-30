@@ -1,0 +1,29 @@
+name: Mirror to Bitbucket
+
+# GitHub is the public source of truth for this repo. This mirrors every
+# push (all branches and tags, exactly) to our private Bitbucket org so
+# nobody has to keep two remotes up to date by hand.
+on:
+  push:
+    branches: ["**"]
+    tags: ["**"]
+  workflow_dispatch: {}
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mirror full repository to Bitbucket
+        env:
+          BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
+          BITBUCKET_APP_PASSWORD: ${{ secrets.BITBUCKET_APP_PASSWORD }}
+          BITBUCKET_REPO: ${{ secrets.BITBUCKET_REPO }}
+        run: |
+          set -euo pipefail
+          if [ -z "${BITBUCKET_USERNAME:-}" ] || [ -z "${BITBUCKET_APP_PASSWORD:-}" ] || [ -z "${BITBUCKET_REPO:-}" ]; then
+            echo "::error::Missing one of the BITBUCKET_USERNAME / BITBUCKET_APP_PASSWORD / BITBUCKET_REPO repository secrets."
+            exit 1
+          fi
+          git clone --mirror "https://github.com/${GITHUB_REPOSITORY}.git" mirror.git
+          cd mirror.git
+          git push --mirror "https://${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD}@bitbucket.org/${BITBUCKET_REPO}.git"

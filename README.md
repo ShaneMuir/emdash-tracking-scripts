@@ -1,5 +1,9 @@
 # @shennyy/emdash-tracking-scripts
 
+[![CI](https://github.com/ShaneMuir/emdash-tracking-scripts/actions/workflows/ci.yml/badge.svg)](https://github.com/ShaneMuir/emdash-tracking-scripts/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
+
 A native [EmDash CMS](https://emdashcms.com) plugin that injects third-party tracking and analytics scripts — Google Tag Manager, GA4/gtag, Lead Forensics, and any other raw snippet — site-wide, with an admin-configurable settings screen so a non-technical SEO user can manage tracking IDs without a developer or a deploy.
 
 ## Why a native plugin, not a registry install
@@ -55,6 +59,10 @@ npm test
 
 `index.mjs` separates the pure fragment-building logic (`buildFragments`, `resolveSettings`) from the `definePlugin()` wiring, so the tracking-tag output is fully unit tested without needing a running EmDash instance.
 
+## Contributing
+
+This plugin is deliberately kept small, dependency-free, and thoroughly tested so it stays trustworthy as trusted-authority code — that's also what makes it a good base to build on rather than reinvent. If it's missing an integration you need (a platform, a consent-mode toggle, per-page opt-out, etc.), we'd much rather have that as a PR here than see a dozen narrower forks. See [CONTRIBUTING.md](./CONTRIBUTING.md) for the ground rules, and [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) for how we expect people to treat each other while doing it. Issues and PRs welcome.
+
 ## License
 
-MIT
+MIT — see [LICENSE](./LICENSE). Free to use, fork, and build on.

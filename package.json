@@ -1,0 +1,39 @@
+{
+  "name": "@tribusdigital/emdash-tracking-scripts",
+  "version": "0.1.0",
+  "description": "Native EmDash plugin for injecting third-party tracking and analytics scripts (Google Tag Manager, GA4/gtag, Lead Forensics, and custom snippets) site-wide, with an admin-configurable settings screen.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Tribus Digital",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tribusdigital/emdash-tracking-scripts.git"
+  },
+  "keywords": [
+    "emdash",
+    "emdash-plugin",
+    "google-tag-manager",
+    "google-analytics",
+    "gtag",
+    "analytics",
+    "tracking"
+  ],
+  "exports": {
+    ".": "./index.mjs"
+  },
+  "files": [
+    "index.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "emdash": "^1.0.1"
+  },
+  "devDependencies": {
+    "emdash": "^1.0.1",
+    "vitest": "^3.0.0"
+  },
+  "scripts": {
+    "test": "vitest run"
+  }
+}
